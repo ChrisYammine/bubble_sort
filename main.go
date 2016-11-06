@@ -1,7 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strconv"
+	"strings"
 )
 
 func sort(array []int) (int, int, int) {
@@ -32,12 +36,24 @@ func sort(array []int) (int, int, int) {
 }
 
 func main() {
-	arr := []int{2, 3, 4, 1, 1, 8, 3}
-	fmt.Println(arr)
-	swaps, first, last := sort(arr)
-	fmt.Println(arr)
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	n, _ := strconv.Atoi(scanner.Text())
+
+	// NOTE: I'd much rather just create a new Scanner and have a Split func read each int, but it breaks
+	// Hackerrank's input method (and works locally) so I'll just do this ugly stuff to make it work.
+	scanner.Scan()
+	arr := strings.Split(scanner.Text(), " ")
+	num_arr := make([]int, n)
+
+	for i, v := range arr {
+		num, _ := strconv.Atoi(v)
+		num_arr[i] = num
+	}
+
+	swaps, first, last := sort(num_arr)
 	fmt.Print("Array is sorted in ", swaps)
 	fmt.Print(" swaps.\n")
-	fmt.Println("First Element: ", first)
-	fmt.Println("Last Element: ", last)
+	fmt.Println("First Element:", first)
+	fmt.Println("Last Element:", last)
 }
